@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="Bkid">Book id</label>
+    <input type="number" name="Bkid" id="Bkid"> <span>Message:</span> <br>
+    <label for="Bname">Book name</label>
+    <input type="text" name="Bname" id="Bname"> <br>
+    <label for="price">price</label>
+    <input type="number" name="price" id="price">  <br>
+    <button id="update">Update book</button>
+</body>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+    $(()=>{
+        console.log('Working Js and HTML');
+        $('#Bkid').on('blur',()=>{
+            console.log('blur registered');
+            let input = {bookid: $('#Bkid').val()}
+            console.log(input);
+            $.ajax({
+                data: input,
+                url:"http://localhost:4000/addbook",
+                type :'get',
+                datatype : 'json',
+                success: (datafromserver)=>{
+                    console.log('data fetch successful');
+                    if(datafromserver.status===true){
+                        $('#msg'.text("book added successfully"));
+                    }
+                    else{
+                        $('#msg'.text("book not added"));
+                    }
+                },
+                error:(datafromserver)=>{
+                    console.log('data not fetched');
+                }
+            })
+        })
+    })
+</script>
+
+</html>
